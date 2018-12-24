@@ -1,12 +1,13 @@
-# xb_automata
+# xb
 
-This is an example of a Universal Turing Machine called the __XB__ machine, inspired by Gary Bernhardt's screencasts
+xb is a simple Universal Turing Machine with an even simpler instruction set.
 
-## Architecture
+spec
+====
 
 The architecture for this machine is relatively simple.
 
-Our universal machine is comprised of two cells:
+Our universal machine is comprised of a "tape" with two cells:
      
     | B | B |
  
@@ -24,14 +25,21 @@ The purpose of this machine is to make it such that it is capable of changing th
         X, s3 -> B, R, s4
         B, s4 -> B, L, s1
 
-## Installation
+Some other resources:
 
-This machine / architecture / language / whatever is built as a Rust library. Not really something to be implemented for pragmatism,but rather for learning and understanding theoretical computer science.
+* What is a UTM - https://en.wikipedia.org/wiki/Universal_Turing_machine
+* The inspiration - https://www.destroyallsoftware.com/screencasts/catalog/power-of-turing-machines
+
+install
+=======
+
+This project is distributed as a Rust library.
 
 To see how it works, run the only available test:
 
-    cargo test -- --nocapture
+    cargo test
 
-## License
+license
+=======
 
-[MIT License](https://codemuch.tech/license.txt)
+[mit](https://codemuch.tech/license.txt)

@@ -26,7 +26,6 @@ struct State<'a> {
     current_state: &'a str
 }
 
-
 #[derive(Debug)]
 struct Instruction<'a> {
     symbol: char,
@@ -49,7 +48,7 @@ impl<'a> XbExt for XbMachine<'a> {
     ///
     /// ... from that, create a new XbMachine HashMap type, where each state is mapped
     /// onto each instruction.
-    fn xb_new(vec_state: Vec<(char, &'a str)>, vec_instruction: Vec<(char, char, &'a str)> ) -> XbMachine<'a> {
+    pub fn xb_new(vec_state: Vec<(char, &'a str)>, vec_instruction: Vec<(char, char, &'a str)> ) -> XbMachine<'a> {
 
         let mut isa = HashMap::new();
 
@@ -71,13 +70,11 @@ impl<'a> XbExt for XbMachine<'a> {
             // Insert both into the HashMap
             isa.insert(state, instruction);
         }
-
-        // Return it!
         isa
     }
 
-    fn xb_simulate(&mut self){
 
+    pub fn xb_simulate(&mut self){
         // First, let's declare our tape as a vector
         let mut tape: Vec<char> = vec!['B', 'B'];
         
@@ -129,18 +126,16 @@ impl<'a> XbExt for XbMachine<'a> {
 
                 }
             }
-
-
         }
     }
-
 }
 
 
 mod tests {
-
     #[test]
     fn it_works(){
+        
+        // initialize our states
         let xb_states = vec![
             ('B', "s1"),
             ('B', "s2"),
@@ -148,6 +143,7 @@ mod tests {
             ('B', "s4")
         ];
 
+        // create our instructions
         let xb_instructions = vec![
             ('X', 'R', "s2"),
             ('B', 'L', "s3"),
@@ -155,8 +151,8 @@ mod tests {
             ('B', 'L', "s1")
         ];
 
+        // create a new machine, and simulate
         let mut xb_isa = XbMachine::xb_new(xb_states, xb_instructions);
-        
         xb_isa.xb_simulate();
     }
 }
