@@ -1,13 +1,13 @@
 # xb
 
-xb is a simple Universal Turing Machine with an even simpler instruction set.
+xb is a simple Turing Machine with an even simpler instruction set.
 
 spec
 ====
 
 The architecture for this machine is relatively simple.
 
-Our universal machine is comprised of a "tape" with two cells:
+Our machine is comprised of a "tape" with two cells:
      
     | B | B |
  

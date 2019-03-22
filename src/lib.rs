@@ -1,22 +1,24 @@
-/// ## XB Universal Turing Machine
-/// Our universal machine is comprised of two cells:
-///     
+/// ## XB Turing Machine
+/// Our machine is comprised of two cells:
+///
 ///     | B | B |
-/// 
+///
 /// The purpose of this machine is to make it such that it is capable of changing the first cell to an X, and then reverting back to a  B.
-/// 
+///
 ///   Pseudocode Instruction Set:
 ///     R       = move cell to the right
 ///     L       = move cell to the left
-///     ->      = alter content of cell 
-///     s1..s4  = state symbols 
-/// 
+///     ->      = alter content of cell
+///     s1..s4  = state symbols
+///
 /// Our example program:
 ///     B, s1 -> X, R, s2
 ///     B, s2 -> B, L, s3
 ///     X, s3 -> B, R, s4
 ///     B, s4 -> B, L, s1
 ///
+///
+/// Note the similarities of the design and implementation of a finite state machine.
 
 use std::collections::HashMap;
 
@@ -26,6 +28,7 @@ struct State<'a> {
     current_state: &'a str
 }
 
+
 #[derive(Debug)]
 struct Instruction<'a> {
     symbol: char,
@@ -33,12 +36,17 @@ struct Instruction<'a> {
     next_state: &'a str
 }
 
+
+/// define a type alias to Hashmap<State, Instruction>
 type XbMachine<'a> = HashMap<State<'a>, Instruction<'a>>;
 
+
+/// initialize a trait that extends methods for our type aliased XbMachine
 trait XbExt {
     fn xb_new(vec_state: Vec<(char, &'static str)>, vec_instruction: Vec<(char, char, &'static str)>) -> Self;
     fn xb_simulate(&mut self);
 }
+
 
 impl<'a> XbExt for XbMachine<'a> {
 
@@ -48,8 +56,9 @@ impl<'a> XbExt for XbMachine<'a> {
     ///
     /// ... from that, create a new XbMachine HashMap type, where each state is mapped
     /// onto each instruction.
-    pub fn xb_new(vec_state: Vec<(char, &'a str)>, vec_instruction: Vec<(char, char, &'a str)> ) -> XbMachine<'a> {
+    pub fn xb_new(vec_state: Vec<(char, &'a str)>, vec_instruction: Vec<(char, char, &'a str)>) -> XbMachine<'a> {
 
+        // initialize hashmap (eventually the XbMachine type)
         let mut isa = HashMap::new();
 
         for i in 0..vec_state.len() {
@@ -58,7 +67,7 @@ impl<'a> XbExt for XbMachine<'a> {
             let state = State {
                 current_char: vec_state[i].0,
                 current_state: vec_state[i].1
-            };  
+            };
 
             // Create the new Instruction from the second tuple provided
             let instruction = Instruction {
@@ -74,11 +83,12 @@ impl<'a> XbExt for XbMachine<'a> {
     }
 
 
-    pub fn xb_simulate(&mut self){
-        // First, let's declare our tape as a vector
+    pub fn xb_simulate(&mut self) -> () {
+
+        // declare tape with initial state
         let mut tape: Vec<char> = vec!['B', 'B'];
-        
-        // Let's also declare an index, or head, for our tape.
+
+        // initialize head "register"
         let mut head: isize = 0;
 
         // Set the default state to start in.
@@ -89,13 +99,13 @@ impl<'a> XbExt for XbMachine<'a> {
 
             // Iterate over the HashMap by unpacking the key (State) and value (Instruction)
             for (state, instruction) in self.iter() {
-                
+
                 // Set the default state as the initial symbol and the state
                 let index_key = (tape[head as usize], index_state);
 
                 // Check if a tuple comprising of the elements of a key is equal to index_key.
                 if (state.current_char, state.current_state) == index_key {
-                    
+
                     // Print the current state of the tape.
                     println!("{:?}", tape);
 
@@ -103,7 +113,7 @@ impl<'a> XbExt for XbMachine<'a> {
                     println!("{:?}, {:?} -> {:?}, {:?}, {:?}", state.current_char,
                         state.current_state, instruction.symbol, instruction.direction,
                         instruction.next_state);
-                    
+
                     // Now, set the cell in the tape to the specified symbol
                     tape[head as usize] = instruction.symbol;
 
@@ -123,18 +133,21 @@ impl<'a> XbExt for XbMachine<'a> {
 
                     // Assign state to the new state as specified by instruction
                     index_state = instruction.next_state;
-
                 }
             }
         }
+        ()
     }
+
 }
 
 
 mod tests {
+
+
     #[test]
-    fn it_works(){
-        
+    fn it_works() {
+
         // initialize our states
         let xb_states = vec![
             ('B', "s1"),
