@@ -1,6 +1,8 @@
 [package]
-name = "xb_automata"
+name = "xb"
 version = "0.1.0"
 authors = ["ex0dus-0x <ex0dus@codemuch.tech>"]
+
+edition = "2018"
 
 [dependencies]
