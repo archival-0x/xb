@@ -4,11 +4,7 @@ xb is a simple Turing Machine with an even simpler instruction set.
 
 ## Introduction
 
-This is a proof-of-concept of an abstraction implementation for a Turing Machine. For more information regarding its implementation, check out the blog post [here](https://codemuch.tech/2018/12/30/design-turing-machine.html).
-
-## Specification
-
-The architecture for this machine is relatively simple.
+This is a proof-of-concept of an abstraction implementation for a Turing Machine.
 
 Our machine is comprised of a "tape" with two cells:
 
@@ -37,12 +33,3 @@ To see how it works, run the only available test:
 ```
 $ cargo test
 ```
-
-## Other resources
-
-* What is a UTM - https://en.wikipedia.org/wiki/Universal_Turing_machine
-* The inspiration - https://www.destroyallsoftware.com/screencasts/catalog/power-of-turing-machines
-
-## License
-
-[MIT License](https://codemuch.tech/license.txt)
